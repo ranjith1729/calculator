@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Calculator</title>
+    <style type="text/css">
+        /* Your existing CSS styles here */
+    </style>
+</head>
+<body>
+    <form name="calculator">
+        <table>
+            <tr>
+                <td colspan="4">
+                    <input type="text" name="result" id="result" placeholder="0">
+                </td>
+            </tr>
+            <tr>
+                <td><button type="button" value="sin" onclick="calculateTrig('sin')">sin</button></td>
+                <td><button type="button" value="cos" onclick="calculateTrig('cos')">cos</button></td>
+                <td><button type="button" value="tan" onclick="calculateTrig('tan')">tan</button></td>
+                <td><button type="button" value="C" onclick="clearResult()">C</button></td>
+            </tr>
+            <tr>
+                <td><button type="button" value="x^2" onclick="calculatePower(2)">x<sup>2</sup></button></td>
+                <td><button type="button" value="x^3" onclick="calculatePower(3)">x<sup>3</sup></button></td>
+                <td><button type="button" value="sqrt" onclick="calculateSqrt()">√</button></td>
+                <td><button type="button" value="cbrt" onclick="calculateCbrt()">³√</button></td>
+            </tr>
+            <tr>
+                <td><button type="button" value="1" onclick="appendNumber(1)">1</button></td>
+                <td><button type="button" value="2" onclick="appendNumber(2)">2</button></td>
+                <td><button type="button" value="3" onclick="appendNumber(3)">3</button></td>
+                <td><button type="button" value="/" onclick="appendOperator('/')">/</button></td>
+            </tr>
+            <tr>
+                <td><button type="button" value="4" onclick="appendNumber(4)">4</button></td>
+                <td><button type="button" value="5" onclick="appendNumber(5)">5</button></td>
+                <td><button type="button" value="6" onclick="appendNumber(6)">6</button></td>
+                <td><button type="button" value="-" onclick="appendOperator('-')">-</button></td>
+            </tr>
+            <tr>
+                <td><button type="button" value="7" onclick="appendNumber(7)">7</button></td>
+                <td><button type="button" value="8" onclick="appendNumber(8)">8</button></td>
+                <td><button type="button" value="9" onclick="appendNumber(9)">9</button></td>
+                <td><button type="button" value="*" onclick="appendOperator('*')">*</button></td>
+            </tr>
+            <tr>
+                <td><button type="button" value="." onclick="appendDecimal()">.</button></td>
+                <td><button type="button" value="0" onclick="appendNumber(0)">0</button></td>
+                <td><button type="button" value="%" onclick="appendOperator('%')">%</button></td>
+                <td><button type="button" value="=" onclick="calculateResult()" class="equal">=</button></td>
+            </tr>
+        </table>
+    </form>
+    <script type="text/javascript">
+        function calculateTrig(func) {
+            var value = parseFloat(document.getElementById('result').value);
+            if (func === 'sin') {
+                document.getElementById('result').value = Math.sin(value);
+            } else if (func === 'cos') {
+                document.getElementById('result').value = Math.cos(value);
+            } else if (func === 'tan') {
+                document.getElementById('result').value = Math.tan(value);
+            }
+        }
+
+        function calculatePower(power) {
+            var value = parseFloat(document.getElementById('result').value);
+            if (power === 2) {
+                document.getElementById('result').value = Math.pow(value, 2);
+            } else if (power === 3) {
+                document.getElementById('result').value = Math.pow(value, 3);
+            }
+        }
+
+        function calculateSqrt() {
+            var value = parseFloat(document.getElementById('result').value);
+            document.getElementById('result').value = Math.sqrt(value);
+        }
+
+        function calculateCbrt() {
+            var value = parseFloat(document.getElementById('result').value);
+            document.getElementById('result').value = Math.cbrt(value);
+        }
+
+        function appendNumber(num) {
+            document.getElementById('result').value += num;
+        }
+
+        function appendOperator(operator) {
+            var currentValue = document.getElementById('result').value;
+            var lastChar = currentValue[currentValue.length - 1];
+            // Ensure we don't append operator consecutively
+            if (lastChar !== '+' && lastChar !== '-' && lastChar !== '*' && lastChar !== '/' && lastChar !== '%') {
+                document.getElementById('result').value += operator;
+            }
+        }
+
+        function appendDecimal() {
+            var currentValue = document.getElementById('result').value;
+            // Ensure we don't append more than one decimal point
+            if (currentValue.indexOf('.') === -1) {
+                document.getElementById('result').value += '.';
+            }
+        }
+
+        function clearResult() {
+            document.getElementById('result').value = '';
+        }
+
+        function calculateResult() {
+            try {
+                var result = eval(document.getElementById('result').value);
+                document.getElementById('result').value = result;
+            } catch (e) {
+                document.getElementById('result').value = 'Error';
+            }
+        }
+    </script>
+</body>
+</html>
